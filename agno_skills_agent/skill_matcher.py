@@ -1,7 +1,7 @@
 """
-Skill Matcher - Intelligently matches user requests to appropriate skills.
+Skill Matcher - 智能地将用户请求匹配到合适的 skills。
 
-Uses LLM-based matching to select the most relevant skill(s) for a given task.
+使用基于 LLM 的匹配来为给定任务选择最相关的 skill(s)。
 """
 
 from typing import Dict, List, Optional
@@ -9,7 +9,7 @@ from .skill_loader import SkillMetadata
 
 
 class SkillMatcher:
-    """Matches user queries to relevant skills based on descriptions."""
+    """基于描述将用户查询匹配到相关的 skills。"""
     
     def __init__(self):
         self._match_cache: Dict[str, List[str]] = {}
@@ -21,23 +21,23 @@ class SkillMatcher:
         top_k: int = 3
     ) -> List[str]:
         """
-        Match user query to most relevant skills.
+        将用户查询匹配到最相关的 skills。
         
-        Uses keyword matching and description analysis to find skills
-        that are most likely to help with the user's request.
+        使用关键词匹配和描述分析来找到
+        最有可能帮助用户请求的 skills。
         
-        Args:
-            user_query: User's request or question
-            skills: Dictionary of available skills
-            top_k: Maximum number of skills to return
+        参数:
+            user_query: 用户的请求或问题
+            skills: 可用 skills 的字典
+            top_k: 要返回的最大 skill 数量
             
-        Returns:
-            List of skill names, ordered by relevance
+        返回:
+            按相关性排序的 skill 名称列表
         """
         if not skills:
             return []
         
-        # Calculate relevance scores
+        # 计算相关性分数
         scores = {}
         query_lower = user_query.lower()
         
@@ -45,47 +45,47 @@ class SkillMatcher:
             score = self._calculate_relevance(query_lower, metadata)
             scores[skill_name] = score
         
-        # Sort by score and return top k
+        # 按分数排序并返回前 k 个
         sorted_skills = sorted(scores.items(), key=lambda x: x[1], reverse=True)
         
-        # Filter out skills with zero score
+        # 过滤掉零分的 skills
         relevant_skills = [name for name, score in sorted_skills if score > 0]
         
         return relevant_skills[:top_k]
     
     def _calculate_relevance(self, query: str, metadata: SkillMetadata) -> float:
         """
-        Calculate relevance score between query and skill.
+        计算查询和 skill 之间的相关性分数。
         
-        Uses simple keyword matching and description analysis.
-        More sophisticated approaches (embeddings) can be added later.
+        使用简单的关键词匹配和描述分析。
+        后续可以添加更复杂的方法（embeddings）。
         
-        Args:
-            query: Lowercased user query
-            metadata: Skill metadata
+        参数:
+            query: 小写的用户查询
+            metadata: Skill 元数据
             
-        Returns:
-            Relevance score (higher is more relevant)
+        返回:
+            相关性分数（越高越相关）
         """
         score = 0.0
         
-        # Check if skill name appears in query
+        # 检查 skill 名称是否出现在查询中
         skill_name_lower = metadata.name.lower()
         if skill_name_lower in query:
             score += 10.0
         
-        # Check description keywords
+        # 检查描述关键词
         description_lower = metadata.description.lower()
         
-        # Split into words for keyword matching
+        # 分割为单词进行关键词匹配
         query_words = set(query.split())
         description_words = set(description_lower.split())
         
-        # Count matching keywords
+        # 计算匹配的关键词
         matching_words = query_words.intersection(description_words)
         score += len(matching_words) * 1.0
         
-        # Bonus for matching common action words
+        # 匹配常见动作词的加分
         action_words = {
             "create": ["creating", "create", "build", "generate"],
             "test": ["test", "testing", "verify", "check"],
@@ -103,7 +103,7 @@ class SkillMatcher:
                 if any(variant in description_lower for variant in variants):
                     score += 5.0
         
-        # Specific skill detection
+        # 特定 skill 检测
         skill_indicators = {
             "mcp": ["mcp", "model context protocol", "mcp server"],
             "pdf": ["pdf", "document"],
@@ -129,16 +129,16 @@ class SkillMatcher:
     
     def format_skills_for_prompt(self, skills: Dict[str, SkillMetadata]) -> str:
         """
-        Format skills metadata for inclusion in agent prompt.
+        格式化 skills 元数据以包含在 agent 提示中。
         
-        Creates XML-formatted list of available skills that the agent
-        can use to understand what capabilities are available.
+        创建 XML 格式的可用 skills 列表，agent
+        可以用它来了解有哪些可用能力。
         
-        Args:
-            skills: Dictionary of skill metadata
+        参数:
+            skills: skill 元数据字典
             
-        Returns:
-            XML-formatted string describing available skills
+        返回:
+            描述可用 skills 的 XML 格式字符串
         """
         if not skills:
             return "<available_skills>\nNo skills available.\n</available_skills>"
@@ -162,13 +162,13 @@ class SkillMatcher:
     
     def get_skill_summary(self, metadata: SkillMetadata) -> str:
         """
-        Get a brief summary of a skill.
+        获取 skill 的简要摘要。
         
-        Args:
-            metadata: Skill metadata
+        参数:
+            metadata: Skill 元数据
             
-        Returns:
-            Formatted summary string
+        返回:
+            格式化的摘要字符串
         """
         summary = f"**{metadata.name}**\n"
         summary += f"{metadata.description}\n"
@@ -178,14 +178,14 @@ class SkillMatcher:
     
     def find_exact_skill(self, skill_name: str, skills: Dict[str, SkillMetadata]) -> Optional[str]:
         """
-        Find skill by exact name match (case-insensitive).
+        通过精确名称匹配查找 skill（不区分大小写）。
         
-        Args:
-            skill_name: Name to search for
-            skills: Dictionary of available skills
+        参数:
+            skill_name: 要搜索的名称
+            skills: 可用 skills 的字典
             
-        Returns:
-            Exact skill name if found, None otherwise
+        返回:
+            如果找到返回精确的 skill 名称，否则返回 None
         """
         skill_name_lower = skill_name.lower()
         
@@ -196,5 +196,5 @@ class SkillMatcher:
         return None
     
     def clear_cache(self):
-        """Clear matching cache."""
+        """清除匹配缓存。"""
         self._match_cache.clear()

@@ -1,12 +1,12 @@
 """
-Test script for Skills Agent - Validates core functionality.
+Skills Agent 测试脚本 - 验证核心功能。
 
-This script tests:
-1. Skill discovery and metadata loading
-2. Skill matching
-3. Skill activation
-4. Tool creation
-5. Progressive disclosure
+此脚本测试：
+1. Skill 发现和元数据加载
+2. Skill 匹配
+3. Skill 激活
+4. 工具创建
+5. 渐进式披露
 """
 
 from pathlib import Path
@@ -19,7 +19,7 @@ from agno_skills_agent import (
 
 
 def test_skill_loader():
-    """Test SkillLoader functionality."""
+    """测试 SkillLoader 功能。"""
     print("=" * 60)
     print("TEST 1: SkillLoader")
     print("=" * 60)
@@ -31,13 +31,13 @@ def test_skill_loader():
         print(f"[FAIL] Skills directory not found: {skills_dir}")
         return False
     
-    # Discover skills
+    # 发现 skills
     print(f"\nDiscovering skills in {skills_dir}...")
     skills = loader.discover_skills(skills_dir)
     
     print(f"[OK] Discovered {len(skills)} skills")
     
-    # Test metadata loading
+    # 测试元数据加载
     if skills:
         skill_name = list(skills.keys())[0]
         metadata = skills[skill_name]
@@ -46,7 +46,7 @@ def test_skill_loader():
         print(f"  Description: {metadata.description[:80]}...")
         print(f"  Path: {metadata.path}")
         
-        # Test full content loading
+        # 测试完整内容加载
         print(f"\nLoading full content for '{skill_name}'...")
         content = loader.load_full_skill(skill_name)
         print(f"[OK] Loaded {len(content.instructions)} characters of instructions")
@@ -63,7 +63,7 @@ def test_skill_loader():
 
 
 def test_skill_matcher():
-    """Test SkillMatcher functionality."""
+    """测试 SkillMatcher 功能。"""
     print("\n" + "=" * 60)
     print("TEST 2: SkillMatcher")
     print("=" * 60)
@@ -74,7 +74,7 @@ def test_skill_matcher():
     
     matcher = SkillMatcher()
     
-    # Test matching
+    # 测试匹配
     test_queries = [
         "create a new MCP server",
         "test my web application",
@@ -90,7 +90,7 @@ def test_skill_matcher():
         else:
             print(f"  No matches found")
     
-    # Test exact match
+    # 测试精确匹配
     exact = matcher.find_exact_skill("mcp-builder", skills)
     if exact:
         print(f"\n[OK] Exact match test passed: found '{exact}'")
@@ -100,7 +100,7 @@ def test_skill_matcher():
 
 
 def test_skill_executor():
-    """Test SkillExecutor functionality."""
+    """测试 SkillExecutor 功能。"""
     print("\n" + "=" * 60)
     print("TEST 3: SkillExecutor")
     print("=" * 60)
@@ -111,7 +111,7 @@ def test_skill_executor():
     skills_dir = Path("skills-examples/skills")
     skills = loader.discover_skills(skills_dir)
     
-    # Find a skill with scripts
+    # 查找包含脚本的 skill
     test_skill = None
     for skill_name in skills.keys():
         content = loader.load_full_skill(skill_name)
@@ -123,11 +123,11 @@ def test_skill_executor():
         print(f"\nTesting with skill: {test_skill}")
         content = loader.load_full_skill(test_skill)
         
-        # Create tools
+        # 创建工具
         tools = executor.create_agno_tools(content)
         print(f"[OK] Created {len(tools)} tools from skill")
         
-        for tool in tools[:3]:  # Show first 3
+        for tool in tools[:3]:  # 显示前 3 个
             print(f"  - {tool.__name__}")
     else:
         print("\nNo skills with scripts found for testing")
@@ -137,7 +137,7 @@ def test_skill_executor():
 
 
 def test_skills_agent():
-    """Test SkillsAgent integration."""
+    """测试 SkillsAgent 集成。"""
     print("\n" + "=" * 60)
     print("TEST 4: SkillsAgent Integration")
     print("=" * 60)
@@ -151,8 +151,8 @@ def test_skills_agent():
     print("\nInitializing SkillsAgent...")
     
     try:
-        # Note: This requires OPENAI_API_KEY to be set
-        # We'll just test initialization without API calls
+        # 注意：这需要设置 OPENAI_API_KEY
+        # 我们只测试初始化，不进行 API 调用
         agent = SkillsAgent(
             skills_dir=skills_dir,
             debug=False
@@ -161,13 +161,13 @@ def test_skills_agent():
         print(f"[OK] Agent initialized successfully")
         print(f"[OK] Discovered {len(agent.skills_metadata)} skills")
         
-        # Test skill listing
+        # 测试 skill 列表
         skill_names = list(agent.skills_metadata.keys())
         print(f"\nAvailable skills (first 5):")
         for name in skill_names[:5]:
             print(f"  - {name}")
         
-        # Test manual activation (without API call)
+        # 测试手动激活（不进行 API 调用）
         if skill_names:
             test_skill = skill_names[0]
             print(f"\nTesting manual activation of '{test_skill}'...")
@@ -190,7 +190,7 @@ def test_skills_agent():
 
 
 def test_progressive_disclosure():
-    """Test progressive disclosure mechanism."""
+    """测试渐进式披露机制。"""
     print("\n" + "=" * 60)
     print("TEST 5: Progressive Disclosure")
     print("=" * 60)
@@ -201,10 +201,10 @@ def test_progressive_disclosure():
     print("\nStage 1: Loading metadata only...")
     skills = loader.discover_skills(skills_dir)
     
-    # Estimate metadata size
+    # 估算元数据大小
     metadata_size = 0
     for metadata in skills.values():
-        # Rough estimate: name + description length
+        # 粗略估算：名称 + 描述长度
         metadata_size += len(metadata.name) + len(metadata.description)
     
     print(f"[OK] Loaded metadata for {len(skills)} skills")
@@ -229,7 +229,7 @@ def test_progressive_disclosure():
 
 
 def main():
-    """Run all tests."""
+    """运行所有测试。"""
     print("\n" + "=" * 60)
     print("AGNO SKILLS AGENT - TEST SUITE")
     print("=" * 60)
@@ -252,7 +252,7 @@ def main():
             print(f"\n[FAIL] Test '{test_name}' failed with exception: {e}")
             results.append((test_name, False))
     
-    # Summary
+    # 总结
     print("\n" + "=" * 60)
     print("TEST SUMMARY")
     print("=" * 60)

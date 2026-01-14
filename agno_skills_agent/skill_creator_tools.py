@@ -1,7 +1,7 @@
 """
-Skill Creator Tools - Helper functions to create and manage skills.
+Skill Creator Tools - 创建和管理 skills 的辅助函数。
 
-Provides integration with skill-creator scripts from the skills-examples.
+提供与 skills-examples 中 skill-creator 脚本的集成。
 """
 
 import sys
@@ -11,42 +11,42 @@ from typing import Optional
 
 
 class SkillCreatorTools:
-    """Tools for creating and managing skills."""
+    """创建和管理 skills 的工具。"""
     
     def __init__(self, skills_examples_dir: Optional[Path] = None):
         """
-        Initialize skill creator tools.
+        初始化 skill 创建工具。
         
-        Args:
-            skills_examples_dir: Path to skills-examples directory
-                                If None, tries to find it relative to current location
+        参数:
+            skills_examples_dir: skills-examples 目录路径
+                                如果为 None，尝试相对于当前位置查找
         """
         if skills_examples_dir:
             self.skills_examples_dir = Path(skills_examples_dir)
         else:
-            # Try to find skills-examples relative to current file
+            # 尝试相对于当前文件查找 skills-examples
             current_dir = Path(__file__).parent.parent
             self.skills_examples_dir = current_dir / "skills-examples"
         
         self.skill_creator_dir = self.skills_examples_dir / "skills" / "skill-creator"
         self.scripts_dir = self.skill_creator_dir / "scripts"
         
-        # Check if skill-creator exists
+        # 检查 skill-creator 是否存在
         if not self.skill_creator_dir.exists():
             print(f"Warning: skill-creator not found at {self.skill_creator_dir}")
     
     def init_skill(self, skill_name: str, output_path: Optional[str] = None) -> str:
         """
-        Initialize a new skill using init_skill.py script.
+        使用 init_skill.py 脚本初始化新的 skill。
         
-        Creates a new skill directory with template SKILL.md and example files.
+        创建包含模板 SKILL.md 和示例文件的新 skill 目录。
         
-        Args:
-            skill_name: Name of the skill to create
-            output_path: Directory where skill should be created (optional)
+        参数:
+            skill_name: 要创建的 skill 名称
+            output_path: skill 应该创建的目录（可选）
             
-        Returns:
-            Output from init_skill.py script
+        返回:
+            init_skill.py 脚本的输出
         """
         init_script = self.scripts_dir / "init_skill.py"
         
@@ -78,16 +78,16 @@ class SkillCreatorTools:
     
     def package_skill(self, skill_path: str, output_dir: Optional[str] = None) -> str:
         """
-        Package a skill into a distributable .skill file.
+        将 skill 打包为可分发的 .skill 文件。
         
-        Validates the skill and creates a .skill zip file.
+        验证 skill 并创建 .skill zip 文件。
         
-        Args:
-            skill_path: Path to skill directory
-            output_dir: Directory where .skill file should be created (optional)
+        参数:
+            skill_path: skill 目录路径
+            output_dir: 应创建 .skill 文件的目录（可选）
             
-        Returns:
-            Output from package_skill.py script
+        返回:
+            package_skill.py 脚本的输出
         """
         package_script = self.scripts_dir / "package_skill.py"
         
@@ -119,15 +119,15 @@ class SkillCreatorTools:
     
     def validate_skill(self, skill_path: str) -> str:
         """
-        Validate a skill using quick_validate.py script.
+        使用 quick_validate.py 脚本验证 skill。
         
-        Checks if skill follows the Agent Skills specification.
+        检查 skill 是否遵循 Agent Skills 规范。
         
-        Args:
-            skill_path: Path to skill directory
+        参数:
+            skill_path: skill 目录路径
             
-        Returns:
-            Validation results
+        返回:
+            验证结果
         """
         validate_script = self.scripts_dir / "quick_validate.py"
         
@@ -155,7 +155,7 @@ class SkillCreatorTools:
             return f"Error: {str(e)}"
     
     def get_init_help(self) -> str:
-        """Get help text for init_skill.py."""
+        """获取 init_skill.py 的帮助文本。"""
         init_script = self.scripts_dir / "init_skill.py"
         
         if not init_script.exists():
@@ -173,7 +173,7 @@ class SkillCreatorTools:
             return f"Error: {str(e)}"
     
     def get_package_help(self) -> str:
-        """Get help text for package_skill.py."""
+        """获取 package_skill.py 的帮助文本。"""
         package_script = self.scripts_dir / "package_skill.py"
         
         if not package_script.exists():
@@ -193,67 +193,67 @@ class SkillCreatorTools:
 
 def create_skill_creator_tools(skills_agent) -> list:
     """
-    Create tool functions for skill creation that can be added to an agent.
+    创建可添加到 agent 的 skill 创建工具函数。
     
-    Args:
-        skills_agent: SkillsAgent instance
+    参数:
+        skills_agent: SkillsAgent 实例
         
-    Returns:
-        List of tool functions
+    返回:
+        工具函数列表
     """
-    # Find skills-examples directory
+    # 查找 skills-examples 目录
     skills_examples_dir = skills_agent.skills_dir.parent
     creator = SkillCreatorTools(skills_examples_dir)
     
     def create_new_skill(skill_name: str, output_path: Optional[str] = None) -> str:
         """
-        Create a new skill with template files.
+        创建包含模板文件的新 skill。
         
-        Initializes a new skill directory with:
-        - SKILL.md template with proper frontmatter
-        - Example scripts/ directory
-        - Example references/ directory
-        - Example assets/ directory
+        初始化包含以下内容的新 skill 目录：
+        - 带有正确 frontmatter 的 SKILL.md 模板
+        - 示例 scripts/ 目录
+        - 示例 references/ 目录
+        - 示例 assets/ 目录
         
-        Args:
-            skill_name: Name for the new skill (lowercase, hyphens for spaces)
-            output_path: Where to create the skill (optional, defaults to current directory)
+        参数:
+            skill_name: 新 skill 的名称（小写，空格用连字符）
+            output_path: 创建 skill 的位置（可选，默认为当前目录）
             
-        Returns:
-            Status message
+        返回:
+            状态消息
         """
         return creator.init_skill(skill_name, output_path)
     
     def package_skill_file(skill_path: str, output_dir: Optional[str] = None) -> str:
         """
-        Package a skill into a distributable .skill file.
+        将 skill 打包为可分发的 .skill 文件。
         
-        Validates and packages the skill into a .skill zip file that can be shared.
+        验证并将 skill 打包为可共享的 .skill zip 文件。
         
-        Args:
-            skill_path: Path to the skill directory
-            output_dir: Where to save the .skill file (optional)
+        参数:
+            skill_path: skill 目录路径
+            output_dir: 保存 .skill 文件的位置（可选）
             
-        Returns:
-            Status message with path to .skill file
+        返回:
+            包含 .skill 文件路径的状态消息
         """
         return creator.package_skill(skill_path, output_dir)
     
     def validate_skill_format(skill_path: str) -> str:
         """
-        Validate that a skill follows the Agent Skills specification.
+        验证 skill 是否遵循 Agent Skills 规范。
         
-        Checks:
-        - YAML frontmatter format and required fields
-        - Skill naming conventions
-        - Directory structure
-        - File organization
+        检查：
+        - YAML frontmatter 格式和必需字段
+        - Skill 命名约定
+        - 目录结构
+        - 文件组织
         
-        Args:
-            skill_path: Path to the skill directory
+        参数:
+            skill_path: skill 目录路径
             
-        Returns:
-            Validation results
+        返回:
+            验证结果
         """
         return creator.validate_skill(skill_path)
     

@@ -1,30 +1,30 @@
 """
-Basic Usage Example - Demonstrates core functionality of Skills Agent.
+基础使用示例 - 演示 Skills Agent 的核心功能。
 
-This example shows how to:
-1. Initialize the Skills Agent
-2. List available skills
-3. Let the agent automatically match and activate skills
-4. Use skill tools to accomplish tasks
+此示例展示如何：
+1. 初始化 Skills Agent
+2. 列出可用的 skills
+3. 让 agent 自动匹配和激活 skills
+4. 使用 skill 工具完成任务
 """
 
 import os
 from pathlib import Path
 from agno_skills_agent import SkillsAgent
 
-# Set your OpenAI API key
+# 设置你的 OpenAI API 密钥
 # os.environ["OPENAI_API_KEY"] = "your-api-key-here"
 
 def main():
-    """Run basic usage examples."""
+    """运行基础使用示例。"""
     
     print("=" * 60)
     print("Agno Skills Agent - Basic Usage Example")
     print("=" * 60)
     print()
     
-    # Initialize the Skills Agent
-    # Point it to the skills-examples/skills directory
+    # 初始化 Skills Agent
+    # 指向 skills-examples/skills 目录
     skills_dir = Path(__file__).parent.parent / "skills-examples" / "skills"
     
     if not skills_dir.exists():
@@ -36,32 +36,32 @@ def main():
     agent = SkillsAgent(
         skills_dir=skills_dir,
         model_id="gpt-4o",
-        debug=True  # Show tool calls for learning
+        debug=True  # 显示工具调用以便学习
     )
     print()
     
-    # Example 1: List all available skills
+    # 示例 1: 列出所有可用的 skills
     print("=" * 60)
     print("Example 1: List Available Skills")
     print("=" * 60)
     agent.print_response("请列出所有可用的 skills")
     print()
     
-    # Example 2: Get information about a specific skill
+    # 示例 2: 获取特定 skill 的信息
     print("=" * 60)
     print("Example 2: Get Skill Information")
     print("=" * 60)
     agent.print_response("告诉我 mcp-builder skill 是做什么的")
     print()
     
-    # Example 3: Let agent suggest skills for a task
+    # 示例 3: 让 agent 为任务推荐 skills
     print("=" * 60)
     print("Example 3: Suggest Skills for Task")
     print("=" * 60)
     agent.print_response("我想创建一个新的 MCP server，你推荐哪些 skills？")
     print()
     
-    # Example 4: Automatic skill activation and usage
+    # 示例 4: 自动激活和使用 skill
     print("=" * 60)
     print("Example 4: Automatic Skill Activation")
     print("=" * 60)
@@ -71,7 +71,7 @@ def main():
     )
     print()
     
-    # Example 5: Multiple skills for complex task
+    # 示例 5: 使用多个 skills 完成复杂任务
     print("=" * 60)
     print("Example 5: Using Multiple Skills")
     print("=" * 60)
@@ -81,7 +81,7 @@ def main():
     )
     print()
     
-    # Show activated skills
+    # 显示已激活的 skills
     print("=" * 60)
     print("Activated Skills Summary")
     print("=" * 60)

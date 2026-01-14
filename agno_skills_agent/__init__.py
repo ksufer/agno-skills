@@ -1,8 +1,8 @@
 """
-Agno Skills Agent - A system for dynamically loading and executing Agent Skills with Agno framework.
+Agno Skills Agent - 使用 Agno 框架动态加载和执行 Agent Skills 的系统。
 
-This module provides intelligent skill discovery, matching, and execution capabilities
-for AI agents using the Agent Skills specification.
+本模块为 AI 智能体提供智能的 skill 发现、匹配和执行能力，
+遵循 Agent Skills 规范。
 """
 
 from .skills_agent import SkillsAgent

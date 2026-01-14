@@ -1,8 +1,8 @@
 """
-Skills Agent - Main agent class that orchestrates skill discovery, matching, and execution.
+Skills Agent - 协调 skill 发现、匹配和执行的主 agent 类。
 
-Integrates SkillLoader, SkillMatcher, and SkillExecutor to create an intelligent
-agent that can dynamically discover and use skills based on user requests.
+集成 SkillLoader、SkillMatcher 和 SkillExecutor 来创建一个智能的
+agent，可以基于用户请求动态发现和使用 skills。
 """
 
 from pathlib import Path
@@ -17,12 +17,12 @@ from .skill_matcher import SkillMatcher
 
 class SkillsAgent:
     """
-    Intelligent agent that can discover, match, and execute Agent Skills.
+    能够发现、匹配和执行 Agent Skills 的智能 agent。
     
-    Implements progressive disclosure:
-    1. Loads only skill metadata at startup (~100 tokens per skill)
-    2. Activates full skill content when needed
-    3. Dynamically adds skill tools to the agent
+    实现渐进式披露：
+    1. 启动时只加载 skill 元数据（每个 skill 约100个token）
+    2. 在需要时激活完整的 skill 内容
+    3. 动态添加 skill 工具到 agent
     """
     
     def __init__(
@@ -33,31 +33,31 @@ class SkillsAgent:
         debug: bool = False
     ):
         """
-        Initialize the Skills Agent.
+        初始化 Skills Agent。
         
-        Args:
-            skills_dir: Path to directory containing skill folders
-            model_id: OpenAI model ID to use
-            api_key: OpenAI API key (optional, uses env var if not provided)
-            debug: Enable debug mode
+        参数:
+            skills_dir: 包含 skill 文件夹的目录路径
+            model_id: 要使用的 OpenAI 模型 ID
+            api_key: OpenAI API 密钥（可选，未提供时使用环境变量）
+            debug: 启用调试模式
         """
         self.skills_dir = Path(skills_dir)
         self.debug = debug
         
-        # Initialize components
+        # 初始化组件
         self.skill_loader = SkillLoader()
         self.skill_executor = SkillExecutor()
         self.skill_matcher = SkillMatcher()
         
-        # Discover available skills (metadata only)
+        # 发现可用的 skills（仅元数据）
         print(f"Discovering skills in {self.skills_dir}...")
         self.skills_metadata = self.skill_loader.discover_skills(self.skills_dir)
         print(f"Found {len(self.skills_metadata)} skills")
         
-        # Track activated skills
+        # 跟踪已激活的 skills
         self.activated_skills: Dict[str, SkillContent] = {}
         
-        # Create base Agno agent
+        # 创建基础 Agno agent
         model_kwargs = {"id": model_id}
         if api_key:
             model_kwargs["api_key"] = api_key
@@ -69,18 +69,18 @@ class SkillsAgent:
             debug_mode=debug,
         )
         
-        # Add skill management tools
+        # 添加 skill 管理工具
         self._add_skill_management_tools()
     
     def _build_instructions(self) -> str:
         """
-        Build agent instructions including available skills metadata.
+        构建包含可用 skills 元数据的 agent 指令。
         
-        Uses progressive disclosure: only includes skill names and descriptions,
-        not full content.
+        使用渐进式披露：只包含 skill 名称和描述，
+        不包含完整内容。
         
-        Returns:
-            Formatted instructions string
+        返回:
+            格式化的指令字符串
         """
         instructions = """You are an intelligent agent with access to specialized skills.
 
@@ -88,7 +88,7 @@ Skills are modular capabilities that provide specialized knowledge, workflows, a
 You can activate skills when needed to help users accomplish tasks.
 
 """
-        # Add available skills metadata
+        # 添加可用的 skills 元数据
         skills_xml = self.skill_matcher.format_skills_for_prompt(self.skills_metadata)
         instructions += skills_xml
         
@@ -104,31 +104,31 @@ You can activate multiple skills if needed for complex tasks.
         return instructions
     
     def _add_skill_management_tools(self):
-        """Add tools for managing skills to the agent."""
+        """向 agent 添加管理 skills 的工具。"""
         
         def activate_skill(skill_name: str) -> str:
             """
-            Activate a skill to access its tools and instructions.
+            激活 skill 以访问其工具和指令。
             
-            After activation, you will have access to the skill's:
-            - Scripts (as callable tools)
-            - References (documentation)
-            - Assets (resources)
+            激活后，你将可以访问 skill 的：
+            - Scripts（作为可调用工具）
+            - References（文档）
+            - Assets（资源）
             
-            Args:
-                skill_name: Name of the skill to activate
+            参数:
+                skill_name: 要激活的 skill 名称
                 
-            Returns:
-                Status message with available tools
+            返回:
+                包含可用工具的状态消息
             """
             return self.activate_skill(skill_name)
         
         def list_skills() -> str:
             """
-            List all available skills with their descriptions.
+            列出所有可用的 skills 及其描述。
             
-            Returns:
-                Formatted list of skills
+            返回:
+                格式化的 skills 列表
             """
             if not self.skills_metadata:
                 return "No skills available."
@@ -144,15 +144,15 @@ You can activate multiple skills if needed for complex tasks.
         
         def get_skill_info(skill_name: str) -> str:
             """
-            Get detailed information about a specific skill.
+            获取特定 skill 的详细信息。
             
-            Args:
-                skill_name: Name of the skill
+            参数:
+                skill_name: skill 名称
                 
-            Returns:
-                Skill information including instructions if activated
+            返回:
+                包含指令的 skill 信息（如果已激活）
             """
-            # Find skill (case-insensitive)
+            # 查找 skill（不区分大小写）
             actual_name = self.skill_matcher.find_exact_skill(
                 skill_name,
                 self.skills_metadata
@@ -168,7 +168,7 @@ You can activate multiple skills if needed for complex tasks.
             if metadata.license:
                 info.append(f"**License:** {metadata.license}\n")
             
-            # If activated, include instructions
+            # 如果已激活，包含指令
             if actual_name in self.activated_skills:
                 skill_content = self.activated_skills[actual_name]
                 info.append("\n## Instructions\n")
@@ -180,13 +180,13 @@ You can activate multiple skills if needed for complex tasks.
         
         def suggest_skills(user_query: str) -> str:
             """
-            Suggest relevant skills for a user query.
+            为用户查询推荐相关的 skills。
             
-            Args:
-                user_query: User's question or request
+            参数:
+                user_query: 用户的问题或请求
                 
-            Returns:
-                List of suggested skills
+            返回:
+                推荐的 skills 列表
             """
             suggestions = self.skill_matcher.match_skills(
                 user_query,
@@ -206,7 +206,7 @@ You can activate multiple skills if needed for complex tasks.
             
             return "\n".join(result)
         
-        # Add tools to agent
+        # 将工具添加到 agent
         self.agent.add_tool(activate_skill)
         self.agent.add_tool(list_skills)
         self.agent.add_tool(get_skill_info)
@@ -214,18 +214,18 @@ You can activate multiple skills if needed for complex tasks.
     
     def activate_skill(self, skill_name: str) -> str:
         """
-        Activate a skill and add its tools to the agent.
+        激活 skill 并将其工具添加到 agent。
         
-        This implements the second stage of progressive disclosure:
-        loads full skill content and creates tools.
+        这实现了渐进式披露的第二阶段：
+        加载完整的 skill 内容并创建工具。
         
-        Args:
-            skill_name: Name of skill to activate
+        参数:
+            skill_name: 要激活的 skill 名称
             
-        Returns:
-            Status message
+        返回:
+            状态消息
         """
-        # Find exact skill name (case-insensitive)
+        # 查找精确的 skill 名称（不区分大小写）
         actual_name = self.skill_matcher.find_exact_skill(
             skill_name,
             self.skills_metadata
@@ -234,28 +234,28 @@ You can activate multiple skills if needed for complex tasks.
         if not actual_name:
             return f"Skill '{skill_name}' not found. Use list_skills to see available skills."
         
-        # Check if already activated
+        # 检查是否已激活
         if actual_name in self.activated_skills:
             return f"Skill '{actual_name}' is already activated."
         
         try:
-            # Load full skill content
+            # 加载完整的 skill 内容
             if self.debug:
                 print(f"Loading full content for skill: {actual_name}")
             
             skill_content = self.skill_loader.load_full_skill(actual_name)
             
-            # Create tools from skill resources
+            # 从 skill 资源创建工具
             tools = self.skill_executor.create_agno_tools(skill_content)
             
-            # Add tools to agent
+            # 将工具添加到 agent
             for tool in tools:
                 self.agent.add_tool(tool)
             
-            # Mark as activated
+            # 标记为已激活
             self.activated_skills[actual_name] = skill_content
             
-            # Build response
+            # 构建响应
             response = [f"✓ Activated skill: {actual_name}\n"]
             response.append(f"**Description:** {skill_content.metadata.description}\n")
             
@@ -273,19 +273,19 @@ You can activate multiple skills if needed for complex tasks.
     
     def run(self, message: str, stream: bool = False) -> Any:
         """
-        Run the agent with a user message.
+        使用用户消息运行 agent。
         
-        The agent will automatically:
-        1. Analyze the request
-        2. Match and activate relevant skills
-        3. Use skill tools to complete the task
+        agent 将自动：
+        1. 分析请求
+        2. 匹配并激活相关的 skills
+        3. 使用 skill 工具完成任务
         
-        Args:
-            message: User's request
-            stream: Whether to stream the response
+        参数:
+            message: 用户的请求
+            stream: 是否流式传输响应
             
-        Returns:
-            Agent response
+        返回:
+            Agent 响应
         """
         if stream:
             return self.agent.print_response(message, stream=True)
@@ -294,37 +294,37 @@ You can activate multiple skills if needed for complex tasks.
     
     def print_response(self, message: str, stream: bool = True):
         """
-        Run agent and print response (convenience method).
+        运行 agent 并打印响应（便捷方法）。
         
-        Args:
-            message: User's request
-            stream: Whether to stream the response
+        参数:
+            message: 用户的请求
+            stream: 是否流式传输响应
         """
         return self.agent.print_response(message, stream=stream)
     
     def get_activated_skills(self) -> list[str]:
-        """Get list of currently activated skill names."""
+        """获取当前已激活的 skill 名称列表。"""
         return list(self.activated_skills.keys())
     
     def clear_activated_skills(self):
         """
-        Clear all activated skills and their tools.
+        清除所有已激活的 skills 及其工具。
         
-        Note: This does not remove tools from the agent,
-        only clears the activation tracking.
+        注意：这不会从 agent 中删除工具，
+        只是清除激活跟踪。
         """
         self.activated_skills.clear()
     
     def reload_skills(self):
         """
-        Reload skill metadata from filesystem.
+        从文件系统重新加载 skill 元数据。
         
-        Useful if skills were added or modified after agent initialization.
+        如果在 agent 初始化后添加或修改了 skills，此方法很有用。
         """
         self.skill_loader.clear_cache()
         self.skills_metadata = self.skill_loader.discover_skills(self.skills_dir)
         
-        # Update agent instructions
+        # 更新 agent 指令
         self.agent.instructions = self._build_instructions()
         
         print(f"Reloaded {len(self.skills_metadata)} skills")

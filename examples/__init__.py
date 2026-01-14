@@ -1,1 +1,1 @@
-"""Examples for Agno Skills Agent."""
+"""Agno Skills Agent 的示例。"""
