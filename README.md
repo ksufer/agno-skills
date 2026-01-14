@@ -13,14 +13,28 @@
 
 ## 快速开始
 
-### 安装依赖
+### 1. 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 设置 API 密钥
+### 2. 获取 API 密钥
 
+访问 [阿里云 DashScope 控制台](https://dashscope.console.aliyun.com/) 获取 API 密钥。
+
+### 3. 设置 API 密钥
+
+**方法 1 - 使用 .env 文件（推荐）：**
+
+在项目根目录创建 `.env` 文件：
+```env
+DASHSCOPE_API_KEY=sk-your-dashscope-api-key
+```
+
+**方法 2 - 设置环境变量：**
+
+Linux/macOS:
 ```bash
 export DASHSCOPE_API_KEY="your-dashscope-api-key"
 ```
@@ -29,6 +43,19 @@ Windows PowerShell:
 ```powershell
 $env:DASHSCOPE_API_KEY="your-dashscope-api-key"
 ```
+
+Windows CMD:
+```cmd
+set DASHSCOPE_API_KEY=your-dashscope-api-key
+```
+
+### 4. 测试连接
+
+```bash
+python test_connection.py
+```
+
+**注意**：本项目已配置为使用**中国大陆 DashScope 端点**。如果你使用国际版 API，请参考 [端点配置文档](docs/dashscope_endpoints.md)。
 
 ### 基础使用
 
@@ -40,6 +67,7 @@ from agno_skills_agent import SkillsAgent
 agent = SkillsAgent(
     skills_dir="skills-examples/skills",
     model_id="qwen-plus"
+    # 注意：项目已配置中国大陆 DashScope 端点
 )
 
 # Agent 会自动发现、匹配和激活相关的 skills
@@ -254,6 +282,26 @@ print(result)
 
 ## 故障排除
 
+### API 密钥错误（401 Unauthorized）
+
+**症状**：运行时出现 "Incorrect API key provided" 或 401 错误
+
+**常见原因和解决方法**：
+
+1. **API 密钥未设置或错误**
+   - 确认已从 [DashScope 控制台](https://dashscope.console.aliyun.com/) 获取 API 密钥
+   - 检查环境变量：`echo $env:DASHSCOPE_API_KEY`（PowerShell）
+   - 确保 API 密钥包含 `sk-` 前缀
+
+2. **API 端点地区不匹配**（最常见）
+   - 本项目默认使用**中国大陆端点**
+   - 如果你的 API 密钥是国际版，需要修改 `base_url`
+   - 详见：[端点配置文档](docs/dashscope_endpoints.md)
+
+3. **验证配置**
+   - 运行测试脚本：`python test_connection.py`
+   - 如使用 .env 文件，确保调用了 `load_dotenv()`
+
 ### Skills 未被发现
 
 - 确保 skills 目录路径正确
@@ -271,6 +319,12 @@ print(result)
 - 确保脚本有执行权限
 - 检查脚本依赖是否已安装
 - 使用 `--help` 查看脚本用法
+
+### 更多帮助
+
+- 📖 查看 [快速开始指南](docs/quick_start.md) 获取详细配置说明
+- 🌍 查看 [API 端点配置](docs/dashscope_endpoints.md) 了解地区端点设置
+- 🔧 阅读 [DashScope 迁移文档](docs/dashscope_migration.md) 了解更多配置选项
 
 ## 贡献
 

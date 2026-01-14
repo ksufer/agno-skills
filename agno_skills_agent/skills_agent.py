@@ -58,7 +58,11 @@ class SkillsAgent:
         self.activated_skills: Dict[str, SkillContent] = {}
         
         # 创建基础 Agno agent
-        model_kwargs = {"id": model_id}
+        model_kwargs = {
+            "id": model_id,
+            # 中国大陆用户必须使用此端点
+            "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+        }
         if api_key:
             model_kwargs["api_key"] = api_key
         

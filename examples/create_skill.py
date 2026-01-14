@@ -9,9 +9,13 @@
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 from agno_skills_agent import SkillsAgent, create_skill_creator_tools
 
-# 设置你的 DashScope API 密钥
+# 加载 .env 文件中的环境变量
+load_dotenv()
+
+# 或者直接设置
 # os.environ["DASHSCOPE_API_KEY"] = "your-api-key-here"
 
 def main():

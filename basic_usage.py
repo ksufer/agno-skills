@@ -10,13 +10,9 @@
 
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 from agno_skills_agent import SkillsAgent
 
-# 加载 .env 文件中的环境变量
-load_dotenv()
-
-# 或者直接设置
+# 设置你的 DashScope API 密钥
 # os.environ["DASHSCOPE_API_KEY"] = "your-api-key-here"
 
 def main():
@@ -29,7 +25,7 @@ def main():
     
     # 初始化 Skills Agent
     # 指向 skills-examples/skills 目录
-    skills_dir = Path(__file__).parent.parent / "skills-examples" / "skills"
+    skills_dir = Path(__file__).parent / "skills-examples" / "skills"
     
     if not skills_dir.exists():
         print(f"Error: Skills directory not found at {skills_dir}")

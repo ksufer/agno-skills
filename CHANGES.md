@@ -1,5 +1,46 @@
 # 修改记录
 
+## 2026-01-14: DashScope API 端点配置修复
+
+### 🔧 重要修复
+
+**问题**：用户遇到 401 "Incorrect API key provided" 错误
+
+**原因**：中国大陆用户必须使用指定的 API 端点，否则即使 API 密钥正确也会报 401 错误
+
+**解决**：
+- 在 `SkillsAgent` 类中显式配置中国大陆 DashScope 端点
+- 更新测试脚本使用正确的端点
+- 添加详细的端点配置文档
+
+### 修改内容
+
+1. **agno_skills_agent/skills_agent.py**
+   - 添加 `base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"` 配置
+
+2. **test_connection.py**
+   - 添加 `base_url` 参数到测试代码
+
+3. **docs/dashscope_endpoints.md**（新增）
+   - API 端点类型说明
+   - 中国大陆 vs 国际版配置
+   - 常见错误和解决方法
+
+4. **README.md**
+   - 更新故障排除部分，强调端点配置问题
+   - 添加端点配置文档链接
+
+5. **docs/quick_start.md**
+   - 更新常见问题，添加端点地区不匹配说明
+
+### 关键信息
+
+- ✅ **正确端点**：`https://dashscope.aliyuncs.com/compatible-mode/v1`（中国大陆）
+- ❌ **错误端点**：`https://dashscope.aliyuncs.com/api/v1`（原生 API，Agno 不支持）
+- ℹ️ **默认端点**：`https://dashscope-intl.aliyuncs.com/compatible-mode/v1`（国际版）
+
+---
+
 ## 2026-01-14: DashScope 模型迁移
 
 ### 修改摘要
@@ -43,15 +84,33 @@
 7. **requirements.txt**
    - 移除 `openai>=1.0.0`（DashScope 已集成在 agno 中）
 
-#### 新增文件 (2 个)
+#### 新增文件 (4 个)
 
 8. **docs/dashscope_migration.md**
    - 完整的迁移文档
    - 使用说明和代码示例
    - 模型对比和优势分析
 
-9. **CHANGES.md**
-   - 本文件（修改记录）
+9. **docs/quick_start.md**
+   - 快速开始指南
+   - API 密钥配置详细说明
+   - 常见问题解答
+
+10. **test_connection.py**
+    - API 连接测试脚本
+    - 自动诊断配置问题
+    - 提供详细的错误提示
+
+11. **CHANGES.md**
+    - 本文件（修改记录）
+
+#### 功能增强 (2 个)
+
+12. **examples/basic_usage.py**
+    - 添加 `load_dotenv()` 支持 .env 文件
+
+13. **examples/create_skill.py**
+    - 添加 `load_dotenv()` 支持 .env 文件
 
 ### 验证结果
 
