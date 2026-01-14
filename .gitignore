@@ -1,0 +1,318 @@
+# Python
+# ------
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+# --------------------
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+.virtualenv/
+pythonenv*/
+
+# PyInstaller
+# -----------
+*.spec
+
+# Unit test / coverage reports
+# -----------------------------
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+# ----------------
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+# -----
+.python-version
+
+# Environment variables
+# ---------------------
+.env
+.env.local
+.env.*.local
+.envrc
+*.env
+
+# API Keys and Secrets
+# --------------------
+*_api_key*
+*secret*
+credentials.json
+secrets.yaml
+
+# IDEs and Editors
+# ----------------
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# Cursor
+.cursor/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Operating System
+# ----------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+.Trash-*
+.nfs*
+
+# Agno / AI Agent specific
+# -------------------------
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+tmp/
+temp/
+.tmp/
+
+# Agent logs and outputs
+logs/
+*.log
+agent_logs/
+run_logs/
+
+# Skill-specific
+my_skills/
+test_skills/
+custom_skills/
+
+# Model caches
+.cache/
+model_cache/
+*.pkl
+*.pickle
+
+# Vector databases
+lancedb/
+chromadb/
+.lancedb/
+.chromadb/
+
+# Knowledge base artifacts
+knowledge_base/
+embeddings/
+
+# Agno session data
+*.agno
+.agno/
+
+# Documentation builds
+# --------------------
+docs/_build/
+docs/.doctrees/
+site/
+.mkdocs/
+
+# Package management
+# ------------------
+poetry.lock
+Pipfile.lock
+pdm.lock
+pyproject.toml.lock
+
+# Testing
+# -------
+.tox/
+.pytest_cache/
+test_results/
+test-results/
+
+# Profiling
+# ---------
+*.prof
+*.lprof
+.prof/
+
+# Project specific
+# ----------------
+# Temporary test files
+test_*.txt
+*_test.py.bak
+
+# Downloaded models or data
+models/
+data/
+datasets/
+
+# User-created skills (not examples)
+user_skills/
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# Compiled translations
+# ---------------------
+*.mo
+*.pot
+
+# Django/Flask specific (if used with AgentOS)
+# --------------------------------------------
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+
+# Scrapy (if used with skills)
+# ----------------------------
+.scrapy
+
+# Sphinx documentation
+# --------------------
+docs/_build/
+
+# MyPy
+# ----
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+# -----------------
+.pyre/
+
+# pytype static type analyzer
+# ---------------------------
+.pytype/
+
+# Cython debug symbols
+# --------------------
+cython_debug/
+
+# Distribution / packaging specific
+# ---------------------------------
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Certificates
+# ------------
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# Node.js (if using frontend tools)
+# ---------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Temporary files
+# ---------------
+*.tmp
+*.temp
+.temp/
+.tmp/
+
+# Archive files
+# -------------
+*.zip
+*.tar.gz
+*.rar
+*.7z

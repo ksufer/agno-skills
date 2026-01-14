@@ -1,5 +1,49 @@
 # 修改记录
 
+## 2026-01-14: Git 配置文件创建
+
+### 📦 新增文件
+
+1. **`.gitignore`**
+   - Python 相关忽略规则（*.pyc, __pycache__, venv 等）
+   - 环境变量和密钥文件（.env, credentials.json 等）
+   - IDE 配置（.vscode, .idea, .cursor 等）
+   - 操作系统文件（.DS_Store, Thumbs.db 等）
+   - Agno 特定文件（数据库、日志、向量数据库等）
+   - 测试和构建产物
+
+2. **`.env.example`**
+   - 环境变量配置模板
+   - 不包含真实 API 密钥
+   - 供新用户参考配置
+
+3. **`docs/git_setup.md`**
+   - Git 仓库配置指南
+   - .gitignore 详细说明
+   - 敏感信息保护建议
+   - Git 工作流程和最佳实践
+
+4. **`docs/git_commands.md`**
+   - Git 常用命令速查表
+   - 分类清晰的命令列表
+   - 本项目的常用工作流
+   - 问题解决方案
+
+### ✅ 验证结果
+
+- ✅ `.env` 文件已被正确忽略（不会被提交）
+- ✅ Python 缓存文件被忽略
+- ✅ IDE 配置文件被忽略
+- ✅ 所有敏感信息受保护
+
+### 🎯 使用说明
+
+1. **首次使用**：复制 `.env.example` 为 `.env` 并填入真实 API 密钥
+2. **提交代码**：使用 `git status` 检查，确保没有敏感文件
+3. **参考文档**：查看 `docs/git_setup.md` 和 `docs/git_commands.md`
+
+---
+
 ## 2026-01-14: DashScope API 端点配置修复
 
 ### 🔧 重要修复
