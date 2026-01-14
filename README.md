@@ -1,6 +1,15 @@
 # Agno Skills Agent
 
-一个能够自动发现、匹配和执行 Agent Skills 的智能体系统，基于 [Agno](https://docs.agno.com) 框架和 [Agent Skills 规范](https://agentskills.io)。
+🚀 **将 Anthropic Claude 的 Agent Skills 能力移植到 Agno 框架**
+
+一个能够自动发现、匹配和执行 Agent Skills 的智能体系统。本项目基于 [Agno](https://docs.agno.com) 框架，实现了原本由 Anthropic Claude 提供的 [Agent Skills 规范](https://agentskills.io)，让任何 LLM（如阿里云通义千问）都能拥有模块化的专业技能管理能力。
+
+### 💡 项目亮点
+
+- **技能移植**：将 Anthropic 的 Agent Skills 理念带到 Agno 生态
+- **框架无关**：不依赖 Claude，使用开源 Agno 框架 + DashScope（通义千问）
+- **完全兼容**：遵循 Anthropic 的 Agent Skills 规范，可直接使用社区 Skills
+- **中文优化**：针对中文场景优化，使用阿里云 DashScope API
 
 ## 特性
 
@@ -257,13 +266,27 @@ result = creator.validate_skill("path/to/my-skill")
 print(result)
 ```
 
-## 技术栈
+## 技术栈与创新
 
-- **Agno**: AI agent 框架
-- **DashScope**: 阿里云 LLM 模型（Qwen-Plus）
+### 核心技术
+
+- **Agno**: 开源 AI agent 框架（替代 Claude 的封闭生态）
+- **DashScope**: 阿里云通义千问模型（中文场景优化）
+- **Agent Skills**: 遵循 Anthropic 的 Skills 规范标准
 - **Pydantic**: 数据验证
 - **PyYAML**: YAML 解析
-- **Agent Skills**: Skill 规范标准
+
+### 创新点
+
+本项目的核心价值在于：
+
+1. **能力迁移**：将 Anthropic Claude 独有的 Agent Skills 能力移植到开源框架
+2. **模型灵活性**：不绑定 Claude，可使用任何 LLM（当前集成通义千问）
+3. **社区兼容**：完全兼容 Anthropic 的 Skills 规范，可使用其 [Skills 示例库](https://github.com/anthropics/skills)
+4. **本地化优势**：
+   - 使用阿里云 DashScope，国内访问更稳定
+   - 针对中文场景优化
+   - 成本更低，性能更优
 
 ## 最佳实践
 
@@ -334,19 +357,52 @@ print(result)
 
 本项目使用 MIT 许可证。Skills 示例可能有不同的许可证，请查看各自的 LICENSE 文件。
 
+## 与 Anthropic Claude 的关系
+
+### Agent Skills 规范
+
+**Agent Skills** 是 [Anthropic](https://www.anthropic.com) 提出的一种模块化 AI 能力规范，原本是 Claude 生态的核心功能之一。本项目：
+
+- ✅ **实现了该规范**：完全遵循 Anthropic 的 Agent Skills 标准
+- ✅ **移植到开源生态**：使用 Agno 框架替代 Claude 的封闭实现
+- ✅ **兼容社区资源**：可直接使用 Anthropic 的 [Skills 示例](https://github.com/anthropics/skills)
+- ✅ **扩展到其他模型**：支持通义千问等国内模型
+
+### 为什么要这样做？
+
+1. **打破垄断**：将优秀的 Skills 理念从 Claude 生态解放出来
+2. **本地化**：适配中文场景和国内 LLM
+3. **成本优化**：使用更经济的模型（通义千问 vs Claude）
+4. **开源精神**：基于开源框架，社区可自由扩展
+
 ## 相关链接
 
-- [Agno 文档](https://docs.agno.com)
-- [Agent Skills 规范](https://agentskills.io)
-- [Agent Skills 示例](https://github.com/anthropics/skills)
-- [MCP 协议](https://modelcontextprotocol.io)
+### 本项目
+- [Agno 文档](https://docs.agno.com) - 本项目使用的 AI agent 框架
+- [阿里云 DashScope](https://dashscope.aliyun.com) - 通义千问模型服务
+
+### Anthropic Agent Skills
+- [Agent Skills 规范](https://agentskills.io) - 官方规范文档
+- [Agent Skills 示例库](https://github.com/anthropics/skills) - Anthropic 官方示例（本项目兼容）
+- [Anthropic 官网](https://www.anthropic.com) - Claude 和 Skills 的创造者
+
+### 相关协议
+- [MCP 协议](https://modelcontextprotocol.io) - Model Context Protocol
 
 ## 致谢
 
-- [Agno](https://github.com/agno-agi/agno) - AI agent 框架
-- [Anthropic](https://www.anthropic.com) - Agent Skills 规范和示例
-- [Alibaba Cloud DashScope](https://dashscope.aliyun.com) - 通义千问模型
+- **[Anthropic](https://www.anthropic.com)** - 感谢创造了 Agent Skills 规范和提供了优秀的示例
+- **[Agno](https://github.com/agno-agi/agno)** - 强大的开源 AI agent 框架，让移植成为可能
+- **[Alibaba Cloud DashScope](https://dashscope.aliyun.com)** - 提供通义千问模型，实现本地化
 
 ---
 
-**Built with ❤️ using Agno and Agent Skills**
+## 🎯 项目定位
+
+**将 Anthropic Claude 的 Agent Skills 能力民主化**
+
+本项目不是简单的 Agno 应用，而是将 Anthropic 开创的 Agent Skills 理念移植到开源生态的尝试。通过 Agno 框架和通义千问模型，让更多开发者和团队能够使用这一强大的模块化能力，而无需依赖 Claude 的封闭生态。
+
+---
+
+**Built with ❤️ by bridging Anthropic's Agent Skills with Agno Framework**
