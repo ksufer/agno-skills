@@ -61,7 +61,7 @@ set DASHSCOPE_API_KEY=your-dashscope-api-key
 ### 4. 测试连接
 
 ```bash
-python test_connection.py
+python test/test_connection.py
 ```
 
 **注意**：本项目已配置为使用**中国大陆 DashScope 端点**。如果你使用国际版 API，请参考 [端点配置文档](docs/dashscope_endpoints.md)。

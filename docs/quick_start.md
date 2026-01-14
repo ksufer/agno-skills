@@ -67,35 +67,17 @@ python test_skills_agent.py
 
 ## 5. 验证安装
 
-运行以下 Python 代码验证配置：
+运行测试脚本验证配置：
 
-```python
-import os
-from agno.agent import Agent
-from agno.models.dashscope import DashScope
-
-# 检查 API 密钥
-api_key = os.getenv("DASHSCOPE_API_KEY")
-if not api_key:
-    print("❌ DASHSCOPE_API_KEY 未设置")
-    print("请按照上述方法设置 API 密钥")
-else:
-    print(f"✅ API 密钥已设置（前 10 位）: {api_key[:10]}...")
-    
-    # 测试连接
-    try:
-        agent = Agent(model=DashScope(id="qwen-plus"), markdown=True)
-        response = agent.run("你好")
-        print("✅ DashScope 连接成功！")
-        print(f"响应: {response.content[:100]}...")
-    except Exception as e:
-        print(f"❌ 连接失败: {e}")
-```
-
-保存为 `test_connection.py` 并运行：
 ```bash
-python test_connection.py
+python test/test_connection.py
 ```
+
+测试脚本会：
+1. 检查 DASHSCOPE_API_KEY 是否设置
+2. 测试 DashScope 连接
+3. 显示模型响应
+4. 提供详细的诊断信息（如果失败）
 
 ## 常见问题
 
