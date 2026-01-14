@@ -177,7 +177,7 @@ agno_skills/
 
 ```
 agno>=0.1.0          # AI agent 框架
-openai>=1.0.0        # OpenAI API
+dashscope>=1.0.0     # DashScope API
 pyyaml>=6.0          # YAML 解析
 pydantic>=2.0.0      # 数据验证
 python-dotenv>=1.0.0 # 环境变量管理
@@ -241,7 +241,7 @@ agent.print_response("激活 webapp-testing 并测试我的网站")
 
 - **Agno** - 强大的 AI agent 框架
 - **Anthropic** - Agent Skills 规范和示例
-- **OpenAI** - GPT 模型支持
+- **Alibaba Cloud DashScope** - 通义千问模型支持
 
 ## 总结
 

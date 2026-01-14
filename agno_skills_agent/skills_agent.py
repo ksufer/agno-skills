@@ -8,7 +8,7 @@ agent，可以基于用户请求动态发现和使用 skills。
 from pathlib import Path
 from typing import Optional, Dict, Any
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.dashscope import DashScope
 
 from .skill_loader import SkillLoader, SkillMetadata, SkillContent
 from .skill_executor import SkillExecutor
@@ -28,7 +28,7 @@ class SkillsAgent:
     def __init__(
         self,
         skills_dir: str | Path,
-        model_id: str = "gpt-4o",
+        model_id: str = "qwen-plus",
         api_key: Optional[str] = None,
         debug: bool = False
     ):
@@ -37,8 +37,8 @@ class SkillsAgent:
         
         参数:
             skills_dir: 包含 skill 文件夹的目录路径
-            model_id: 要使用的 OpenAI 模型 ID
-            api_key: OpenAI API 密钥（可选，未提供时使用环境变量）
+            model_id: 要使用的 DashScope 模型 ID
+            api_key: DashScope API 密钥（可选，未提供时使用环境变量）
             debug: 启用调试模式
         """
         self.skills_dir = Path(skills_dir)
@@ -63,7 +63,7 @@ class SkillsAgent:
             model_kwargs["api_key"] = api_key
         
         self.agent = Agent(
-            model=OpenAIChat(**model_kwargs),
+            model=DashScope(**model_kwargs),
             instructions=self._build_instructions(),
             markdown=True,
             debug_mode=debug,

@@ -11,8 +11,8 @@ import os
 from pathlib import Path
 from agno_skills_agent import SkillsAgent, create_skill_creator_tools
 
-# 设置你的 OpenAI API 密钥
-# os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+# 设置你的 DashScope API 密钥
+# os.environ["DASHSCOPE_API_KEY"] = "your-api-key-here"
 
 def main():
     """运行 skill 创建示例。"""
@@ -32,7 +32,7 @@ def main():
     print("Initializing Skills Agent with skill creation tools...")
     agent = SkillsAgent(
         skills_dir=skills_dir,
-        model_id="gpt-4o",
+        model_id="qwen-plus",
         debug=True
     )
     

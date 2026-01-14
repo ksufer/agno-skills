@@ -22,12 +22,12 @@ pip install -r requirements.txt
 ### 设置 API 密钥
 
 ```bash
-export OPENAI_API_KEY="your-openai-api-key"
+export DASHSCOPE_API_KEY="your-dashscope-api-key"
 ```
 
 Windows PowerShell:
 ```powershell
-$env:OPENAI_API_KEY="your-openai-api-key"
+$env:DASHSCOPE_API_KEY="your-dashscope-api-key"
 ```
 
 ### 基础使用
@@ -39,7 +39,7 @@ from agno_skills_agent import SkillsAgent
 # 初始化 agent，指向 skills 目录
 agent = SkillsAgent(
     skills_dir="skills-examples/skills",
-    model_id="gpt-4o"
+    model_id="qwen-plus"
 )
 
 # Agent 会自动发现、匹配和激活相关的 skills
@@ -108,7 +108,7 @@ Skills Agent 实现了三级渐进式披露机制：
 ```python
 agent = SkillsAgent(
     skills_dir: str | Path,      # Skills 目录路径
-    model_id: str = "gpt-4o",    # OpenAI 模型 ID
+    model_id: str = "qwen-plus", # DashScope 模型 ID
     api_key: Optional[str] = None, # API key（可选）
     debug: bool = False           # 调试模式
 )
@@ -232,7 +232,7 @@ print(result)
 ## 技术栈
 
 - **Agno**: AI agent 框架
-- **OpenAI**: LLM 模型（GPT-4o）
+- **DashScope**: 阿里云 LLM 模型（Qwen-Plus）
 - **Pydantic**: 数据验证
 - **PyYAML**: YAML 解析
 - **Agent Skills**: Skill 规范标准
@@ -291,7 +291,7 @@ print(result)
 
 - [Agno](https://github.com/agno-agi/agno) - AI agent 框架
 - [Anthropic](https://www.anthropic.com) - Agent Skills 规范和示例
-- [OpenAI](https://openai.com) - GPT 模型
+- [Alibaba Cloud DashScope](https://dashscope.aliyun.com) - 通义千问模型
 
 ---
 

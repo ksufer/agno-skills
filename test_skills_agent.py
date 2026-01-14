@@ -151,7 +151,7 @@ def test_skills_agent():
     print("\nInitializing SkillsAgent...")
     
     try:
-        # 注意：这需要设置 OPENAI_API_KEY
+        # 注意：这需要设置 DASHSCOPE_API_KEY
         # 我们只测试初始化，不进行 API 调用
         agent = SkillsAgent(
             skills_dir=skills_dir,
@@ -184,7 +184,7 @@ def test_skills_agent():
         
     except Exception as e:
         print(f"\n[FAIL] Error during agent initialization: {e}")
-        print("\nNote: This may be due to missing OPENAI_API_KEY")
+        print("\nNote: This may be due to missing DASHSCOPE_API_KEY")
         print("The agent structure is correct even if API key is missing")
         return True  # Structure is correct even if API fails
 
